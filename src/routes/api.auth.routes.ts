@@ -8,7 +8,7 @@ const prisma: PrismaClient = new PrismaClient();
 let router = express.Router();
 
 router.post(
-  "/auth/login",
+  "/login",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { emailID, password } = req.body;
@@ -45,41 +45,38 @@ router.post(
   }
 );
 
-router.post(
-  "/auth/register",
-  async (req, res: Response, next: NextFunction) => {
-    try {
-      const { emailID, password } = req.body;
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+router.post("/register", async (req, res: Response, next: NextFunction) => {
+  try {
+    const { emailID, password } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-      const student = await prisma.auth.findUnique({
-        where: { emailID },
+    const student = await prisma.auth.findUnique({
+      where: { emailID },
+    });
+    if (student)
+      res.send({
+        message: "User already found!. Please login",
       });
-      if (student)
-        res.send({
-          message: "User already found!. Please login",
-        });
-      else {
-        await prisma.auth.create({
-          data: { emailID, password: hashedPassword },
-        });
-        const token: string = jwt.sign(
-          { email: emailID },
-          process.env.TOKEN_SECRET as string,
-          {
-            expiresIn: "1h",
-          }
-        );
-        res.header("Authorization", "Bearer " + token);
-        res.send({
-          message: "Registered successfully!!!",
-        });
-      }
-    } catch (error) {
-      next(error);
+    else {
+      await prisma.auth.create({
+        data: { emailID, password: hashedPassword },
+      });
+      const token: string = jwt.sign(
+        { email: emailID },
+        process.env.TOKEN_SECRET as string,
+        {
+          expiresIn: "1h",
+        }
+      );
+      res.header("Authorization", "Bearer " + token);
+      res.send({
+        message: "Registered successfully!!!",
+      });
     }
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 module.exports = router;

@@ -17,7 +17,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Hello");
 });
 
-app.use("/api/v1", require("./routes/api.routes"));
+app.use("/api/v1/auth", require("./routes/api.auth.routes"));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new createHttpError.NotFound());
