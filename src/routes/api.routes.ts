@@ -9,7 +9,40 @@ let router = express.Router();
 
 router.post(
   "/auth/login",
-  (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { emailID, password } = req.body;
+
+      const student = await prisma.auth.findUnique({
+        where: { emailID },
+      });
+      if (!student)
+        res.send({
+          message: "User not found!. Please register",
+        });
+      else {
+        const validPassword = await bcrypt.compare(password, student.password);
+        if (validPassword) {
+          const token: string = jwt.sign(
+            { email: emailID },
+            process.env.TOKEN_SECRET as string,
+            {
+              expiresIn: "1h",
+            }
+          );
+          res.header("Authorization", "Bearer " + token);
+          res.send({
+            message: "Login successfully!!!",
+          });
+        } else
+          res.send({
+            message: "Login failed. Please check the credentials !!!",
+          });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 
 router.post(
@@ -31,7 +64,7 @@ router.post(
         await prisma.auth.create({
           data: { emailID, password: hashedPassword },
         });
-        const token = jwt.sign(
+        const token: string = jwt.sign(
           { email: emailID },
           process.env.TOKEN_SECRET as string,
           {
