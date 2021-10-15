@@ -2,6 +2,7 @@ import { PrismaClient } from ".prisma/client";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const prisma: PrismaClient = new PrismaClient();
 let router = express.Router();
@@ -30,6 +31,14 @@ router.post(
         await prisma.auth.create({
           data: { emailID, password: hashedPassword },
         });
+        const token = jwt.sign(
+          { email: emailID },
+          process.env.TOKEN_SECRET as string,
+          {
+            expiresIn: "1h",
+          }
+        );
+        res.header("Authorization", "Bearer " + token);
         res.send({
           message: "Registered successfully!!!",
         });
