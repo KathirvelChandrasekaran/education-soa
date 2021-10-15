@@ -3,6 +3,7 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { verifyToken } from "../utils/verify.token";
 
 const prisma: PrismaClient = new PrismaClient();
 let router = express.Router();
@@ -33,6 +34,7 @@ router.post(
           res.header("Authorization", "Bearer " + token);
           res.send({
             message: "Login successfully!!!",
+            token: token,
           });
         } else
           res.send({
@@ -69,7 +71,7 @@ router.post("/register", async (req, res: Response, next: NextFunction) => {
           expiresIn: "1h",
         }
       );
-      res.header("Authorization", "Bearer " + token);
+      res.setHeader("Authorization", token);
       res.send({
         message: "Registered successfully!!!",
       });
@@ -78,5 +80,41 @@ router.post("/register", async (req, res: Response, next: NextFunction) => {
     next(error);
   }
 });
+
+router.post(
+  "/studentDetails",
+  verifyToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    return res.send({ message: "Authorization" });
+    //   const {
+    //     course,
+    //     deptID,
+    //     dob,
+    //     email,
+    //     gender,
+    //     isDayScholar,
+    //     name,
+    //     dept_name,
+    //   } = req.body;
+    //   await prisma.student.create({
+    //     data: {
+    //       course,
+    //       deptId: deptID,
+    //       dob,
+    //       email,
+    //       gender,
+    //       name,
+    //       isDayScholar,
+    //       department: {
+    //         create: {
+    //           dept_name,
+    //           dept_id: deptID,
+    //         },
+    //       },
+    //     },
+    //   });
+    // }
+  }
+);
 
 module.exports = router;
