@@ -15,6 +15,7 @@ model Auth {
   emailID  String @id @db.VarChar(255)
   password String
   user_id  String @default(uuid())
+  role     String @default("admin")
 }
 
 model Student {

@@ -11,7 +11,6 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
     });
     if (verifyToken) res.status(200);
     res.locals.email = decodedToken?.payload.email;
-    res.locals.user_id = decodedToken?.payload.user_id;
     next();
   } catch (error) {
     res.status(400).send({ message: "Invalid token" });

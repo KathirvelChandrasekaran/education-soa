@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from ".prisma/client";
+import { PrismaClient } from ".prisma/client";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
@@ -62,10 +62,10 @@ router.post("/register", async (req, res: Response, next: NextFunction) => {
       });
     else {
       await prisma.auth.create({
-        data: { emailID, password: hashedPassword },
+        data: { emailID, password: hashedPassword, role: "student" },
       });
       const token: string = jwt.sign(
-        { email: emailID },
+        { email: emailID, role: "Student" },
         process.env.TOKEN_SECRET as string,
         {
           expiresIn: "1h",
