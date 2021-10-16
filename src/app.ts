@@ -10,6 +10,9 @@ import express, {
 import { Server } from "http";
 import createHttpError from "http-errors";
 import morgan from "morgan";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app: Application = express();
 
