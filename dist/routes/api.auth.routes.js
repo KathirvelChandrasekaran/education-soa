@@ -84,7 +84,7 @@ router.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, f
             });
         else {
             yield prisma.auth.create({
-                data: { emailID, password: hashedPassword },
+                data: { emailID, password: hashedPassword, role: "student" },
             });
             const token = jsonwebtoken_1.default.sign({ email: emailID, role: "Student" }, process.env.TOKEN_SECRET, {
                 expiresIn: "1h",
