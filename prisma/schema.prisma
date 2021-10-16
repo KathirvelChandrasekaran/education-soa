@@ -36,3 +36,21 @@ model Department {
   dept_name String    @db.VarChar(255)
   Student   Student[]
 }
+
+model Particulars {
+  email          String   @id @db.VarChar(255)
+  particulars_id String   @default(uuid())
+  degree         String   @db.VarChar(255)
+  roll_number    String   @db.VarChar(255)
+  photo_url      String
+  branch         String   @db.VarChar(255)
+  date_joined    DateTime @default(now())
+  study_from     Int
+  study_to       Int
+  religion       String   @db.VarChar(255)
+  community      String   @db.VarChar(255)
+  parent_name    String   @db.VarChar(255)
+  annual_income  BigInt   @db.BigInt
+  address        String
+  phone          BigInt   @db.BigInt
+}

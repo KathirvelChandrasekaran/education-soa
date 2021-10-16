@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Particulars" ALTER COLUMN "annual_income" SET DATA TYPE BIGINT,
+ALTER COLUMN "phone" SET DATA TYPE BIGINT;

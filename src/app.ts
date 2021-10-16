@@ -26,6 +26,10 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/api/v1/auth", require("./routes/api.auth.routes"));
+app.use(
+  "/api/v1/student/particulars",
+  require("./routes/api.particulars.routes")
+);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new createHttpError.NotFound());
@@ -45,7 +49,8 @@ const errorHandler: ErrorRequestHandler = (
 };
 
 app.use(errorHandler);
+const port = process.env.PORT || 3000;
 
-const server: Server = app.listen({ port: process.env.PORT || 3000 }, () =>
-  console.log("http://localhost:3000")
+const server: Server = app.listen({ port }, () =>
+  console.log(`http://localhost:${port}`)
 );
