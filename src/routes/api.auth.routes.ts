@@ -86,41 +86,22 @@ router.post(
   verifyToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const {
-      //   course,
-      //   deptID,
-      //   dob,
-      //   email,
-      //   gender,
-      //   isDayScholar,
-      //   name,
-      //   dept_name,
-      // } = req.body;
-      // let data: Prisma.StudentCreateInput;
-      // data = {
-      //   course: req.body.course,
-      //   email: req.body.email,
-      //   dob: "1634312471669",
-      //   name: req.body.name,
-      //   gender: req.body.gender,
-      // };
-      // await prisma.student.create({
-      //   data: {
-      //     course: "MCA",
-      //     dob: "1634312471669",
-      //     email: "kathir@email.com",
-      //     gender: "male",
-      //     name: "Kathir",
-      //   },
-      // });
+      const { course, deptID, dob, gender, isDayScholar, name } = req.body;
+      const user = await prisma.auth.findUnique({
+        where: {
+          emailID: res.locals.email,
+        },
+      });
       await prisma.student.create({
         data: {
-          course: "MCA",
-          dob: "1634312471669",
-          email: "kathir@email.com",
-          gender: "male",
-          name: "Kathir",
-          deptId: "2",
+          course,
+          user_id: user?.user_id as string,
+          dob,
+          email: user?.emailID as string,
+          gender,
+          name,
+          deptId: deptID,
+          isDayScholar,
         },
       });
       res.send({

@@ -14,11 +14,12 @@ generator client {
 model Auth {
   emailID  String @id @db.VarChar(255)
   password String
+  user_id  String @default(uuid())
 }
 
 model Student {
   email        String     @id @db.VarChar(255)
-  user_id      String     @default(uuid())
+  user_id      String
   name         String     @db.VarChar(255)
   dob          String
   createdAt    DateTime   @default(now())
