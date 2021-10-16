@@ -26,9 +26,11 @@ router.post(
         phone,
         annual_income,
       } = req.body;
-      await prisma.particulars.create({
-        data: {
+      await prisma.particularsPersonal.update({
+        where: {
           email: res.locals.email,
+        },
+        data: {
           degree,
           roll_number,
           photo_url,
@@ -48,7 +50,7 @@ router.post(
         message: "Added successfully!!!",
       });
     } catch (error) {
-      res.send({ message: error });
+      res.status(401).send({ message: error });
     }
   }
 );

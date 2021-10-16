@@ -92,6 +92,16 @@ router.post(
           emailID: res.locals.email,
         },
       });
+      await prisma.particularsEducaton.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.particularsPersonal.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
       await prisma.student.create({
         data: {
           course,

@@ -15,20 +15,21 @@ model Auth {
   emailID  String @id @db.VarChar(255)
   password String
   user_id  String @default(uuid())
-  role     String @default("admin")
+  role     String @default("student")
 }
 
 model Student {
-  email        String     @id @db.VarChar(255)
+  email        String              @id @db.VarChar(255)
   user_id      String
-  name         String     @db.VarChar(255)
+  name         String              @db.VarChar(255)
   dob          String
-  createdAt    DateTime   @default(now())
-  course       String     @db.VarChar(255)
-  department   Department @relation(fields: [deptId], references: [dept_id])
+  createdAt    DateTime            @default(now())
+  course       String              @db.VarChar(255)
+  department   Department          @relation(fields: [deptId], references: [dept_id])
   deptId       String
-  gender       String     @db.VarChar(255)
-  isDayScholar Boolean    @default(true)
+  gender       String              @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  personal     ParticularsPersonal @relation(fields: [email], references: [email])
 }
 
 model Department {
@@ -37,20 +38,39 @@ model Department {
   Student   Student[]
 }
 
-model Particulars {
-  email          String   @id @db.VarChar(255)
-  particulars_id String   @default(uuid())
-  degree         String   @db.VarChar(255)
-  roll_number    String   @db.VarChar(255)
-  photo_url      String
-  branch         String   @db.VarChar(255)
-  date_joined    DateTime @default(now())
-  study_from     Int
-  study_to       Int
-  religion       String   @db.VarChar(255)
-  community      String   @db.VarChar(255)
-  parent_name    String   @db.VarChar(255)
-  annual_income  BigInt   @db.BigInt
-  address        String
-  phone          BigInt   @db.BigInt
+model ParticularsPersonal {
+  email          String              @id @db.VarChar(255)
+  particulars_id String              @default(uuid())
+  degree         String?             @db.VarChar(255)
+  roll_number    String?             @db.VarChar(255)
+  photo_url      String?
+  branch         String?             @db.VarChar(255)
+  date_joined    DateTime?           @default(now())
+  study_from     Int?
+  study_to       Int?
+  religion       String?             @db.VarChar(255)
+  community      String?             @db.VarChar(255)
+  parent_name    String?             @db.VarChar(255)
+  annual_income  BigInt?             @db.BigInt
+  address        String?
+  phone          BigInt?             @db.BigInt
+  Student        Student[]
+  education      ParticularsEducaton @relation(fields: [email], references: [email])
+}
+
+model ParticularsEducaton {
+  email               String                @id @db.VarChar(255)
+  sslc                String?               @db.VarChar(255)
+  sslc_yop            Int?
+  sslc_name           String?               @db.VarChar(255)
+  sslc_percent        String?               @db.VarChar(255)
+  hsc                 String?               @db.VarChar(255)
+  hsc_yop             Int?
+  hsc_name            String?               @db.VarChar(255)
+  hsc_percent         String?               @db.VarChar(255)
+  ug                  String?               @db.VarChar(255)
+  ug_yop              Int?
+  ug_name             String?               @db.VarChar(255)
+  ug_percent          String?               @db.VarChar(255)
+  ParticularsPersonal ParticularsPersonal[]
 }
