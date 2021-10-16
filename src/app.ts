@@ -40,6 +40,6 @@ const errorHandler: ErrorRequestHandler = (
 
 app.use(errorHandler);
 
-const server: Server = app.listen(process.env.PORT || 3000, () =>
+const server: Server = app.listen({ port: process.env.PORT || 3000 }, () =>
   console.log("http://localhost:3000")
 );
