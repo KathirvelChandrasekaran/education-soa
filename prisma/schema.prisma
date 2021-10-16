@@ -30,6 +30,7 @@ model Student {
   gender       String              @db.VarChar(255)
   isDayScholar Boolean             @default(true)
   personal     ParticularsPersonal @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
 }
 
 model Department {
@@ -56,6 +57,7 @@ model ParticularsPersonal {
   phone          BigInt?             @db.BigInt
   Student        Student[]
   education      ParticularsEducaton @relation(fields: [email], references: [email])
+  completed      Boolean             @default(false)
 }
 
 model ParticularsEducaton {
@@ -72,5 +74,6 @@ model ParticularsEducaton {
   ug_yop              Int?
   ug_name             String?               @db.VarChar(255)
   ug_percent          Int?
+  completed           Boolean               @default(false)
   ParticularsPersonal ParticularsPersonal[]
 }

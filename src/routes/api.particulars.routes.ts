@@ -26,6 +26,15 @@ router.post(
         phone,
         annual_income,
       } = req.body;
+      var user = await prisma.particularsPersonal.findUnique({
+        where: {
+          email: res.locals.email,
+        },
+      });
+
+      if (user?.completed)
+        return res.status(403).send({ message: "You have already completed" });
+
       await prisma.particularsPersonal.update({
         where: {
           email: res.locals.email,
@@ -44,6 +53,7 @@ router.post(
           address,
           phone,
           annual_income,
+          completed: true,
         },
       });
       res.send({
@@ -76,6 +86,14 @@ router.post(
         ug_name,
         ug_percent,
       } = req.body;
+      var user = await prisma.particularsEducaton.findUnique({
+        where: {
+          email: res.locals.email,
+        },
+      });
+
+      if (user?.completed)
+        return res.status(403).send({ message: "You have already completed" });
       await prisma.particularsEducaton.update({
         where: {
           email: res.locals.email,
@@ -93,6 +111,7 @@ router.post(
           ug_yop,
           ug_name,
           ug_percent,
+          completed: true,
         },
       });
       res.send({

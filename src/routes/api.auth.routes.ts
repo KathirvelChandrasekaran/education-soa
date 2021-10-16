@@ -112,6 +112,7 @@ router.post(
           name,
           deptId: deptID,
           isDayScholar,
+          completed: true,
         },
       });
       res.send({
