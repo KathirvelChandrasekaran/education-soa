@@ -50,7 +50,58 @@ router.post(
         message: "Added successfully!!!",
       });
     } catch (error) {
-      res.status(401).send({ message: error });
+      res.status(401).send({
+        message: error,
+      });
+    }
+  }
+);
+
+router.post(
+  "/education",
+  verifyToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const {
+        sslc,
+        sslc_yop,
+        sslc_name,
+        sslc_percent,
+        hsc,
+        hsc_yop,
+        hsc_name,
+        hsc_percent,
+        ug,
+        ug_yop,
+        ug_name,
+        ug_percent,
+      } = req.body;
+      await prisma.particularsEducaton.update({
+        where: {
+          email: res.locals.email,
+        },
+        data: {
+          sslc,
+          sslc_yop,
+          sslc_name,
+          sslc_percent,
+          hsc,
+          hsc_yop,
+          hsc_name,
+          hsc_percent,
+          ug,
+          ug_yop,
+          ug_name,
+          ug_percent,
+        },
+      });
+      res.send({
+        message: "Added successfully!!!",
+      });
+    } catch (error) {
+      res.status(401).send({
+        message: error,
+      });
     }
   }
 );

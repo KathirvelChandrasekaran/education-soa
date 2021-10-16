@@ -63,14 +63,14 @@ model ParticularsEducaton {
   sslc                String?               @db.VarChar(255)
   sslc_yop            Int?
   sslc_name           String?               @db.VarChar(255)
-  sslc_percent        String?               @db.VarChar(255)
+  sslc_percent        Int?
   hsc                 String?               @db.VarChar(255)
   hsc_yop             Int?
   hsc_name            String?               @db.VarChar(255)
-  hsc_percent         String?               @db.VarChar(255)
+  hsc_percent         Int?
   ug                  String?               @db.VarChar(255)
   ug_yop              Int?
   ug_name             String?               @db.VarChar(255)
-  ug_percent          String?               @db.VarChar(255)
+  ug_percent          Int?
   ParticularsPersonal ParticularsPersonal[]
 }
