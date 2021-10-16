@@ -8,10 +8,12 @@ import express, {
 } from "express";
 import { Server } from "http";
 import createHttpError from "http-errors";
+import morgan from "morgan";
 
 const app: Application = express();
 
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Hello");

@@ -20,7 +20,7 @@ model Student {
   email        String     @id @db.VarChar(255)
   user_id      String     @default(uuid())
   name         String     @db.VarChar(255)
-  dob          DateTime
+  dob          String
   createdAt    DateTime   @default(now())
   course       String     @db.VarChar(255)
   department   Department @relation(fields: [deptId], references: [dept_id])
@@ -30,7 +30,7 @@ model Student {
 }
 
 model Department {
-  dept_id   String    @id @default(uuid())
+  dept_id   String    @id
   dept_name String    @db.VarChar(255)
   Student   Student[]
 }

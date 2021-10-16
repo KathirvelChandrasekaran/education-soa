@@ -1,4 +1,4 @@
-import { PrismaClient } from ".prisma/client";
+import { Prisma, PrismaClient } from ".prisma/client";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
@@ -31,7 +31,7 @@ router.post(
               expiresIn: "1h",
             }
           );
-          res.header("Authorization", "Bearer " + token);
+          res.header("Authorization", token);
           res.send({
             message: "Login successfully!!!",
             token: token,
@@ -85,35 +85,50 @@ router.post(
   "/studentDetails",
   verifyToken,
   async (req: Request, res: Response, next: NextFunction) => {
-    return res.send({ message: "Authorization" });
-    //   const {
-    //     course,
-    //     deptID,
-    //     dob,
-    //     email,
-    //     gender,
-    //     isDayScholar,
-    //     name,
-    //     dept_name,
-    //   } = req.body;
-    //   await prisma.student.create({
-    //     data: {
-    //       course,
-    //       deptId: deptID,
-    //       dob,
-    //       email,
-    //       gender,
-    //       name,
-    //       isDayScholar,
-    //       department: {
-    //         create: {
-    //           dept_name,
-    //           dept_id: deptID,
-    //         },
-    //       },
-    //     },
-    //   });
-    // }
+    try {
+      // const {
+      //   course,
+      //   deptID,
+      //   dob,
+      //   email,
+      //   gender,
+      //   isDayScholar,
+      //   name,
+      //   dept_name,
+      // } = req.body;
+      // let data: Prisma.StudentCreateInput;
+      // data = {
+      //   course: req.body.course,
+      //   email: req.body.email,
+      //   dob: "1634312471669",
+      //   name: req.body.name,
+      //   gender: req.body.gender,
+      // };
+      // await prisma.student.create({
+      //   data: {
+      //     course: "MCA",
+      //     dob: "1634312471669",
+      //     email: "kathir@email.com",
+      //     gender: "male",
+      //     name: "Kathir",
+      //   },
+      // });
+      await prisma.student.create({
+        data: {
+          course: "MCA",
+          dob: "1634312471669",
+          email: "kathir@email.com",
+          gender: "male",
+          name: "Kathir",
+          deptId: "2",
+        },
+      });
+      res.send({
+        message: "Added successfully!!!",
+      });
+    } catch (error) {
+      res.send({ message: error });
+    }
   }
 );
 
