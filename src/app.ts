@@ -1,4 +1,5 @@
 import bodyParser from "body-parser";
+import cors from "cors";
 import express, {
   Request,
   Response,
@@ -14,6 +15,8 @@ const app: Application = express();
 
 app.use(bodyParser.json());
 app.use(morgan("dev"));
+
+app.use(cors());
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Hello");
