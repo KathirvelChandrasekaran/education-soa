@@ -76,4 +76,91 @@ model ParticularsEducaton {
   ug_percent          Int?
   completed           Boolean               @default(false)
   ParticularsPersonal ParticularsPersonal[]
+  academic            ParticularsAcademic   @relation(fields: [email], references: [email])
+}
+
+model ParticularsAcademic {
+  email                       String                @id @db.VarChar(255)
+  completed                   Boolean               @default(false)
+  project                     String?               @db.VarChar(255)
+  team_members                String?               @db.VarChar(255)
+  org_name                    String?               @db.VarChar(255)
+  guide_name                  String?               @db.VarChar(255)
+  cgpa                        Int?
+  overall_rank                Int?
+  placed_organization         String?               @db.VarChar(255)
+  placed_organization_address String?               @db.VarChar(255)
+  ParticularsEducaton         ParticularsEducaton[]
+  Sem1                        Sem1[]
+  Sem2                        Sem2[]
+  Sem3                        Sem3[]
+  Sem4                        Sem4[]
+  Sem5                        Sem5[]
+  Sem6                        Sem6[]
+}
+
+model Sem1 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
+}
+
+model Sem2 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
+}
+
+model Sem3 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
+}
+
+model Sem4 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
+}
+
+model Sem5 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
+}
+
+model Sem6 {
+  email        String              @id @db.VarChar(255)
+  isDayScholar Boolean             @default(true)
+  tutor_name   String?             @db.VarChar(255)
+  arrear_count Int?                @default(0)
+  redo_count   Int?                @default(0)
+  cgpa         Int?                @default(0)
+  academic     ParticularsAcademic @relation(fields: [email], references: [email])
+  completed    Boolean             @default(false)
 }

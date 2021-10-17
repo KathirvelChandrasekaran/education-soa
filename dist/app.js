@@ -18,6 +18,7 @@ app.get("/", (req, res, next) => {
     res.send("Hello");
 });
 app.use("/api/v1/auth", require("./routes/api.auth.routes"));
+app.use("/api/v1/student/particulars", require("./routes/api.particulars.routes"));
 app.use((req, res, next) => {
     next(new http_errors_1.default.NotFound());
 });
@@ -29,5 +30,6 @@ const errorHandler = (err, req, res, next) => {
     });
 };
 app.use(errorHandler);
-const server = app.listen({ port: process.env.PORT || 3000 }, () => console.log("http://localhost:3000"));
+const port = process.env.PORT || 3000;
+const server = app.listen({ port }, () => console.log(`http://localhost:${port}`));
 //# sourceMappingURL=app.js.map

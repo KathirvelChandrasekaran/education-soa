@@ -79,7 +79,7 @@ router.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, f
             where: { emailID },
         });
         if (student)
-            res.send({
+            res.status(404).send({
                 message: "User already found!. Please login",
             });
         else {
@@ -107,6 +107,51 @@ router.post("/studentDetails", verify_token_1.verifyToken, (req, res, next) => _
                 emailID: res.locals.email,
             },
         });
+        yield prisma.particularsAcademic.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.particularsEducaton.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.particularsPersonal.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem1.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem2.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem3.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem4.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem5.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
+        yield prisma.sem6.create({
+            data: {
+                email: res.locals.email,
+            },
+        });
         yield prisma.student.create({
             data: {
                 course,
@@ -117,6 +162,7 @@ router.post("/studentDetails", verify_token_1.verifyToken, (req, res, next) => _
                 name,
                 deptId: deptID,
                 isDayScholar,
+                completed: true,
             },
         });
         res.send({

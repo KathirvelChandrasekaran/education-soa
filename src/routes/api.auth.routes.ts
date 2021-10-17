@@ -57,13 +57,14 @@ router.post("/register", async (req, res: Response, next: NextFunction) => {
       where: { emailID },
     });
     if (student)
-      res.send({
+      res.status(404).send({
         message: "User already found!. Please login",
       });
     else {
       await prisma.auth.create({
         data: { emailID, password: hashedPassword, role: "student" },
       });
+
       const token: string = jwt.sign(
         { email: emailID, role: "Student" },
         process.env.TOKEN_SECRET as string,
@@ -92,6 +93,12 @@ router.post(
           emailID: res.locals.email,
         },
       });
+
+      await prisma.particularsAcademic.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
       await prisma.particularsEducaton.create({
         data: {
           email: res.locals.email,
@@ -102,6 +109,37 @@ router.post(
           email: res.locals.email,
         },
       });
+      await prisma.sem1.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.sem2.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.sem3.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.sem4.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.sem5.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+      await prisma.sem6.create({
+        data: {
+          email: res.locals.email,
+        },
+      });
+
       await prisma.student.create({
         data: {
           course,
@@ -115,6 +153,7 @@ router.post(
           completed: true,
         },
       });
+
       res.send({
         message: "Added successfully!!!",
       });

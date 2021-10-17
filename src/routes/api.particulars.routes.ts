@@ -125,4 +125,10 @@ router.post(
   }
 );
 
+router.post(
+  "/academic",
+  verifyToken,
+  async (req: Request, res: Response, next: NextFunction) => {}
+);
+
 module.exports = router;
