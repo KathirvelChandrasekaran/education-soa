@@ -90,13 +90,13 @@ model ParticularsAcademic {
   overall_rank                Int?
   placed_organization         String?               @db.VarChar(255)
   placed_organization_address String?               @db.VarChar(255)
-  ParticularsEducaton         ParticularsEducaton[]
   Sem1                        Sem1[]
   Sem2                        Sem2[]
   Sem3                        Sem3[]
   Sem4                        Sem4[]
   Sem5                        Sem5[]
   Sem6                        Sem6[]
+  ParticularsEducaton         ParticularsEducaton[]
 }
 
 model Sem1 {

@@ -114,7 +114,7 @@ router.post(
           completed: true,
         },
       });
-      res.send({
+      res.status(200).send({
         message: "Added successfully!!!",
       });
     } catch (error) {
@@ -128,7 +128,46 @@ router.post(
 router.post(
   "/academic",
   verifyToken,
-  async (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const {
+        cgpa,
+        guide_name,
+        org_name,
+        overall_rank,
+        placed_organization,
+        placed_organization_address,
+        project,
+        team_members,
+      } = req.body;
+      var user = await prisma.particularsEducaton.findUnique({
+        where: {
+          email: res.locals.email,
+        },
+      });
+
+      if (user?.completed)
+        return res.status(403).send({ message: "You have already completed" });
+      await prisma.particularsAcademic.update({
+        where: {
+          email: res.locals.email,
+        },
+        data: {
+          cgpa,
+          guide_name,
+          org_name,
+          overall_rank,
+          placed_organization,
+          placed_organization_address,
+          project,
+          team_members,
+          completed: true,
+        },
+      });
+    } catch (error) {
+      res.status(401).send({ message: error });
+    }
+  }
 );
 
 module.exports = router;
