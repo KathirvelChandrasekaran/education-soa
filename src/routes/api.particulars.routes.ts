@@ -140,7 +140,7 @@ router.post(
         project,
         team_members,
       } = req.body;
-      var user = await prisma.particularsEducaton.findUnique({
+      var user = await prisma.particularsAcademic.findUnique({
         where: {
           email: res.locals.email,
         },

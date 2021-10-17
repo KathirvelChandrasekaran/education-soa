@@ -86,7 +86,7 @@ model ParticularsAcademic {
   team_members                String?               @db.VarChar(255)
   org_name                    String?               @db.VarChar(255)
   guide_name                  String?               @db.VarChar(255)
-  cgpa                        Int?
+  cgpa                        Float?
   overall_rank                Int?
   placed_organization         String?               @db.VarChar(255)
   placed_organization_address String?               @db.VarChar(255)
@@ -105,7 +105,7 @@ model Sem1 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
@@ -116,7 +116,7 @@ model Sem2 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
@@ -127,7 +127,7 @@ model Sem3 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
@@ -138,7 +138,7 @@ model Sem4 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
@@ -149,7 +149,7 @@ model Sem5 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
@@ -160,7 +160,7 @@ model Sem6 {
   tutor_name   String?             @db.VarChar(255)
   arrear_count Int?                @default(0)
   redo_count   Int?                @default(0)
-  cgpa         Int?                @default(0)
+  cgpa         Float?              @default(0)
   academic     ParticularsAcademic @relation(fields: [email], references: [email])
   completed    Boolean             @default(false)
 }
