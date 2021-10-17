@@ -1,11 +1,15 @@
-FROM node:12.18-alpine3.12
-
-COPY $PWD /home/node/app
+FROM node:14 as base
 
 WORKDIR /home/node/app
 
-RUN yarn install --prod;
+COPY package.json ./
 
-EXPOSE 80
+RUN yarn
 
-CMD ["/bin/sh", "-c", "yarn start"]
+COPY . .
+
+FROM base as production
+
+ENV NODE_PATH=./build
+
+RUN yarn run build
