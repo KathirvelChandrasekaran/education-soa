@@ -18,6 +18,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/v1/auth', require('./routes/api.auth.routes'));
 app.use('/api/v1/student/particulars', require('./routes/api.particulars.routes'));
+app.use('/api/v1/student/particulars/semester', require('./routes/api.semester.routes'));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new createHttpError.NotFound());
