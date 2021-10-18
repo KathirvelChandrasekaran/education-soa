@@ -179,4 +179,25 @@ router.post('/sem6', verifyToken, async (req: Request, res: Response, next: Next
   }
 });
 
+router.get('/academic', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await prisma.particularsAcademic.findUnique({
+      where: {
+        email: res.locals.email
+      },
+      include: {
+        Sem1: true,
+        Sem2: true,
+        Sem3: true,
+        Sem4: true,
+        Sem5: true,
+        Sem6: true
+      }
+    });
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(401).send({ message: error });
+  }
+});
+
 module.exports = router;
