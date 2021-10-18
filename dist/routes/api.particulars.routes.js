@@ -33,19 +33,19 @@ const express = __importStar(require("express"));
 const verify_token_1 = require("../utils/verify.token");
 const prisma = new client_1.PrismaClient();
 let router = express.Router();
-router.post("/personalinfo", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/personalinfo', verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { degree, roll_number, photo_url, branch, date_joined, study_from, study_to, religion, community, parent_name, address, phone, annual_income, } = req.body;
+        const { degree, roll_number, photo_url, branch, date_joined, study_from, study_to, religion, community, parent_name, address, phone, annual_income } = req.body;
         var user = yield prisma.particularsPersonal.findUnique({
             where: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
+            return res.status(403).send({ message: 'You have already completed' });
         yield prisma.particularsPersonal.update({
             where: {
-                email: res.locals.email,
+                email: res.locals.email
             },
             data: {
                 degree,
@@ -61,32 +61,32 @@ router.post("/personalinfo", verify_token_1.verifyToken, (req, res, next) => __a
                 address,
                 phone,
                 annual_income,
-                completed: true,
-            },
+                completed: true
+            }
         });
         res.send({
-            message: "Added successfully!!!",
+            message: 'Added successfully!!!'
         });
     }
     catch (error) {
         res.status(401).send({
-            message: error,
+            message: error
         });
     }
 }));
-router.post("/education", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/education', verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { sslc, sslc_yop, sslc_name, sslc_percent, hsc, hsc_yop, hsc_name, hsc_percent, ug, ug_yop, ug_name, ug_percent, } = req.body;
+        const { sslc, sslc_yop, sslc_name, sslc_percent, hsc, hsc_yop, hsc_name, hsc_percent, ug, ug_yop, ug_name, ug_percent } = req.body;
         var user = yield prisma.particularsEducaton.findUnique({
             where: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
+            return res.status(403).send({ message: 'You have already completed' });
         yield prisma.particularsEducaton.update({
             where: {
-                email: res.locals.email,
+                email: res.locals.email
             },
             data: {
                 sslc,
@@ -101,32 +101,32 @@ router.post("/education", verify_token_1.verifyToken, (req, res, next) => __awai
                 ug_yop,
                 ug_name,
                 ug_percent,
-                completed: true,
-            },
+                completed: true
+            }
         });
         res.status(200).send({
-            message: "Added successfully!!!",
+            message: 'Added successfully!!!'
         });
     }
     catch (error) {
         res.status(401).send({
-            message: error,
+            message: error
         });
     }
 }));
-router.post("/academic", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/academic', verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { cgpa, guide_name, org_name, overall_rank, placed_organization, placed_organization_address, project, team_members, } = req.body;
+        const { cgpa, guide_name, org_name, overall_rank, placed_organization, placed_organization_address, project, team_members } = req.body;
         var user = yield prisma.particularsAcademic.findUnique({
             where: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
+            return res.status(403).send({ message: 'You have already completed' });
         yield prisma.particularsAcademic.update({
             where: {
-                email: res.locals.email,
+                email: res.locals.email
             },
             data: {
                 cgpa,
@@ -137,185 +137,11 @@ router.post("/academic", verify_token_1.verifyToken, (req, res, next) => __await
                 placed_organization_address,
                 project,
                 team_members,
-                completed: true,
-            },
+                completed: true
+            }
         });
         res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem1", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem1.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem1.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem2", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem2.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem2.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem3", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem3.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem3.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem4", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem4.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem4.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem5", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem5.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem5.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
-        });
-    }
-    catch (error) {
-        res.status(401).send({ message: error });
-    }
-}));
-router.post("/sem6", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { isDayScholar, tutor_name, arrear_count, redo_count, cgpa } = req.body;
-        var user = yield prisma.sem6.findUnique({
-            where: {
-                email: res.locals.email,
-            },
-        });
-        if (user === null || user === void 0 ? void 0 : user.completed)
-            return res.status(403).send({ message: "You have already completed" });
-        yield prisma.sem6.update({
-            where: { email: res.locals.email },
-            data: {
-                isDayScholar,
-                tutor_name,
-                arrear_count,
-                redo_count,
-                cgpa,
-                completed: true,
-            },
-        });
-        res.status(200).send({
-            message: "Added successfully!!!",
+            message: 'Added successfully!!!'
         });
     }
     catch (error) {

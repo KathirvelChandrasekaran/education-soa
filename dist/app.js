@@ -17,6 +17,7 @@ app.get('/', (req, res, next) => {
 });
 app.use('/api/v1/auth', require('./routes/api.auth.routes'));
 app.use('/api/v1/student/particulars', require('./routes/api.particulars.routes'));
+app.use('/api/v1/student/particulars/semester', require('./routes/api.semester.routes'));
 app.use((req, res, next) => {
     next(new http_errors_1.default.NotFound());
 });
