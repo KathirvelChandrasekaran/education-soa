@@ -38,31 +38,31 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verify_token_1 = require("../utils/verify.token");
 const prisma = new client_1.PrismaClient();
 let router = express.Router();
-router.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/login', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { emailID, password } = req.body;
         const student = yield prisma.auth.findUnique({
-            where: { emailID },
+            where: { emailID }
         });
         if (!student)
             res.send({
-                message: "User not found!. Please register",
+                message: 'User not found!. Please register'
             });
         else {
             const validPassword = yield bcryptjs_1.default.compare(password, student.password);
             if (validPassword) {
                 const token = jsonwebtoken_1.default.sign({ email: emailID }, process.env.TOKEN_SECRET, {
-                    expiresIn: "1h",
+                    expiresIn: '1h'
                 });
-                res.header("Authorization", token);
+                res.header('Authorization', token);
                 res.send({
-                    message: "Login successfully!!!",
-                    token: token,
+                    message: 'Login successfully!!!',
+                    token: token
                 });
             }
             else
                 res.send({
-                    message: "Login failed. Please check the credentials !!!",
+                    message: 'Login failed. Please check the credentials !!!'
                 });
         }
     }
@@ -70,28 +70,28 @@ router.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         next(error);
     }
 }));
-router.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/register', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { emailID, password } = req.body;
         const salt = yield bcryptjs_1.default.genSalt(10);
         const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
         const student = yield prisma.auth.findUnique({
-            where: { emailID },
+            where: { emailID }
         });
         if (student)
             res.status(404).send({
-                message: "User already found!. Please login",
+                message: 'User already found!. Please login'
             });
         else {
             yield prisma.auth.create({
-                data: { emailID, password: hashedPassword, role: "student" },
+                data: { emailID, password: hashedPassword, role: 'student' }
             });
-            const token = jsonwebtoken_1.default.sign({ email: emailID, role: "Student" }, process.env.TOKEN_SECRET, {
-                expiresIn: "1h",
+            const token = jsonwebtoken_1.default.sign({ email: emailID, role: 'Student' }, process.env.TOKEN_SECRET, {
+                expiresIn: '1h'
             });
-            res.setHeader("Authorization", token);
+            res.setHeader('Authorization', token);
             res.send({
-                message: "Registered successfully!!!",
+                message: 'Registered successfully!!!'
             });
         }
     }
@@ -99,58 +99,58 @@ router.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, f
         next(error);
     }
 }));
-router.post("/studentDetails", verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/studentDetails', verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { course, deptID, dob, gender, isDayScholar, name } = req.body;
         const user = yield prisma.auth.findUnique({
             where: {
-                emailID: res.locals.email,
-            },
+                emailID: res.locals.email
+            }
         });
         yield prisma.particularsAcademic.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.particularsEducaton.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.particularsPersonal.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem1.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem2.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem3.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem4.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem5.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.sem6.create({
             data: {
-                email: res.locals.email,
-            },
+                email: res.locals.email
+            }
         });
         yield prisma.student.create({
             data: {
@@ -162,12 +162,25 @@ router.post("/studentDetails", verify_token_1.verifyToken, (req, res, next) => _
                 name,
                 deptId: deptID,
                 isDayScholar,
-                completed: true,
-            },
+                completed: true
+            }
         });
         res.send({
-            message: "Added successfully!!!",
+            message: 'Added successfully!!!'
         });
+    }
+    catch (error) {
+        res.send({ message: error });
+    }
+}));
+router.get('/studentDetails', verify_token_1.verifyToken, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = yield prisma.student.findUnique({
+            where: {
+                email: res.locals.email
+            }
+        });
+        res.status(200).send(data);
     }
     catch (error) {
         res.send({ message: error });

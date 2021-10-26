@@ -71,6 +71,19 @@ router.post('/register', async (req, res: Response, next: NextFunction) => {
   }
 });
 
+router.delete('/studentDetails', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await prisma.auth.delete({
+      where: { emailID: req.params.email }
+    });
+    res.status(200).send({
+      message: 'Deleted successfully!!!'
+    });
+  } catch (error) {
+    res.send({ message: error });
+  }
+});
+
 router.post('/studentDetails', verifyToken, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { course, deptID, dob, gender, isDayScholar, name } = req.body;
@@ -154,6 +167,9 @@ router.get('/studentDetails', verifyToken, async (req: Request, res: Response, n
       where: {
         email: res.locals.email
       }
+      // include: {
+      //   personal: true
+      // }
     });
     res.status(200).send(data);
   } catch (error) {

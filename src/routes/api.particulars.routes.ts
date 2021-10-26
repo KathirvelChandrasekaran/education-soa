@@ -158,4 +158,31 @@ router.post('/academic', verifyToken, async (req: Request, res: Response, next: 
   }
 });
 
+router.get('/academic', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const data = await prisma.particularsAcademic.findUnique({
+      where: {
+        email: res.locals.email
+      }
+    });
+    res.status(200).send(data);
+  } catch (error) {
+    res.send({ message: error });
+  }
+});
+
+router.get('/education', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const data = await prisma.particularsEducaton.findUnique({
+      where: {
+        email: res.locals.email
+      },
+      include: {}
+    });
+    res.status(200).send(data);
+  } catch (error) {
+    res.send({ message: error });
+  }
+});
+
 module.exports = router;
